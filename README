@@ -2,3 +2,9 @@
 AvalonDockMVVM is a simple example Wpf Application for using AvalonDock 2.0 with MVVM Databinding.
 
 Written by martin kramer <martin.kramer@lostindetails.com>
+
+Reference:
+https://github.com/8/AvalonDockMVVM/tree/master/AvalonDockMVVM
+https://stackoverflow.com/questions/54352172/how-to-bind-style-property-for-layoutanchorableitem-in-xaml-file-with-avalondock
+https://www.codeproject.com/Articles/239342/AvalonDock-and-MVVM
+https://www.cnblogs.com/chenlhuaf/archive/2009/02/11/1388426.html

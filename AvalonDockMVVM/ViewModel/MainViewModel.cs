@@ -6,20 +6,26 @@ using System.Threading.Tasks;
 
 namespace AvalonDockMVVM.ViewModel
 {
-  public class MainViewModel
-  {
-    public DockManagerViewModel DockManagerViewModel { get; private set; }
-    public MenuViewModel MenuViewModel { get; private set; }
-
-    public MainViewModel()
+    public class MainViewModel
     {
-      var documents = new List<DockWindowViewModel>();
+        public DockManagerViewModel DockManagerViewModel { get; private set; }
+        public MenuViewModel MenuViewModel { get; private set; }
 
-      for (int i = 0; i < 6; i++)
-        documents.Add(new SampleDockWindowViewModel() { Title = "Sample " + i.ToString() });
+        public MainViewModel()
+        {
+            var documents = new List<DockWindowViewModel>();
 
-      this.DockManagerViewModel = new DockManagerViewModel(documents);
-      this.MenuViewModel = new MenuViewModel(documents);
+            for (int i = 0; i < 3; i++)
+            {
+                documents.Add(new SampleApp1ViewModel() { Title = "SampleApp A" + i.ToString() });
+                documents.Add(new SampleApp2ViewModel() { Title = "SampleApp B" + i.ToString() });
+            }
+
+            var anchorables = new List<DockWindowAnchorableViewModel>();
+            anchorables.Add(new SampleAnchorableAppViewModel() { Title = "AnchorableApp" });
+
+            this.DockManagerViewModel = new DockManagerViewModel(documents, anchorables);
+            this.MenuViewModel = new MenuViewModel(documents);
+        }
     }
-  }
 }
