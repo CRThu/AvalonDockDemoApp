@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Selector\AvalonDockDataTemplateSelector.cs" />
     <Compile Include="Selector\AvalonDockStyleSelector.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="RelayCommand.cs" />

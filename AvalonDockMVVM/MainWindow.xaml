@@ -50,14 +50,19 @@
                          DataContext="{Binding DockManagerViewModel}"
                          DocumentsSource="{Binding Documents}"
                          AnchorablesSource="{Binding Anchorables}"
-                         LayoutItemContainerStyleSelector="{StaticResource AvalonDockStyleSelector}">
+                         LayoutItemContainerStyleSelector="{StaticResource AvalonDockStyleSelector}"
+                         LayoutItemTemplateSelector ="{Binding DataTemplateSelector}"
+                         >
             <ad:DockingManager.Theme>
                 <ad:Vs2013LightTheme/>
             </ad:DockingManager.Theme>
 
-            <ad:DockingManager.Resources>
+            <!--<ad:DockingManager.LayoutItemTemplateSelector>
+                <sel:AvalonDockDataTemplateSelector/>
+            </ad:DockingManager.LayoutItemTemplateSelector>-->
 
-                <!-- add views for specific ViewModels -->
+            <!--<ad:DockingManager.Resources>
+                --><!--add views for specific ViewModels--><!--
                 <DataTemplate DataType="{x:Type vm:SampleApp1ViewModel}">
                     <v:SampleApp1/>
                 </DataTemplate>
@@ -70,7 +75,8 @@
                     <v:SampleAnchorableApp/>
                 </DataTemplate>
 
-            </ad:DockingManager.Resources>
+            </ad:DockingManager.Resources>-->
+
 
             <!--<ad:DockingManager.LayoutItemContainerStyle>
                 -->

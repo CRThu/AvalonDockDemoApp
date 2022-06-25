@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AvalonDockMVVM.Selector;
+using AvalonDockMVVM.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -6,6 +8,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace AvalonDockMVVM.ViewModel
 {
@@ -14,10 +18,13 @@ namespace AvalonDockMVVM.ViewModel
         /// <summary>Gets a collection of all visible documents</summary>
         public ObservableCollection<DockWindowViewModel> Documents { get; private set; }
         public ObservableCollection<DockWindowAnchorableViewModel> Anchorables { get; private set; }
+        public DataTemplateSelector DataTemplateSelector { get; set; }
 
 
         public DockManagerViewModel(IEnumerable<DockWindowViewModel> dockWindowViewModels)
         {
+            DataTemplateSelector = new AvalonDockDataTemplateSelector();
+
             this.Documents = new ObservableCollection<DockWindowViewModel>();
 
             foreach (var document in dockWindowViewModels)
@@ -30,6 +37,8 @@ namespace AvalonDockMVVM.ViewModel
 
         public DockManagerViewModel(IEnumerable<DockWindowViewModel> documents, IEnumerable<DockWindowAnchorableViewModel> anchorables)
         {
+            DataTemplateSelector = new AvalonDockDataTemplateSelector();
+
             this.Documents = new ObservableCollection<DockWindowViewModel>();
 
             foreach (var document in documents)
