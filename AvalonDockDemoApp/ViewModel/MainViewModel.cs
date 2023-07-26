@@ -1,4 +1,5 @@
 ﻿using AvalonDockDemoApp.View;
+using AvalonDockDemoApp.ViewModel.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace AvalonDockDemoApp.ViewModel
     public class MainViewModel
     {
         public DockManagerViewModel DockManagerViewModel { get; private set; }
-        public MenuViewModel MenuViewModel { get; private set; }
+        //public MenuViewModel MenuViewModel { get; private set; }
+        public MenuTopViewModel MenuTopViewModel { get; private set; }
 
         public MainViewModel()
         {
@@ -28,7 +30,12 @@ namespace AvalonDockDemoApp.ViewModel
             anchorables.Add(new SampleAnchorableAppViewModel() { Title = "AnchorableApp" });
 
             this.DockManagerViewModel = new DockManagerViewModel(documents, anchorables);
-            this.MenuViewModel = new MenuViewModel(documents);
+            //this.MenuViewModel = new MenuViewModel(documents);
+            MenuTopViewModel = new MenuTopViewModel();
+            MenuTopViewModel.Add(new MenuItemViewModel() { Header = "A" });
+            MenuTopViewModel.Add(new MenuItemViewModel() { Header = "B" });
+            MenuTopViewModel.Add(new MenuItemViewModel() { Header = "C" });
+            MenuTopViewModel.Add(new MenuViewModel(documents));
         }
     }
 }
