@@ -14,39 +14,24 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         {
         }
 
-        public MenuViewsViewModel(IEnumerable<DockWindowViewModel> dockWindows) : this()
+        public MenuViewsViewModel(IEnumerable<string> dockViewNames) : this()
         {
             Header = "Views";
 
-            foreach (var dockWindow in dockWindows)
+            foreach (var dockViewName in dockViewNames)
             {
-                Items.Add(GetMenuItemViewModel(dockWindow));
+                Items.Add(GetMenuItemViewModel(dockViewName));
             }
         }
 
-        private MenuItemViewModel GetMenuItemViewModel(DockWindowViewModel dockWindowViewModel)
+        private MenuItemViewModel GetMenuItemViewModel(string dockViewName)
         {
             var menuItemViewModel = new MenuViewItemViewModel();
             menuItemViewModel.IsCheckable = true;
 
-            menuItemViewModel.Header = dockWindowViewModel.Title;
-            menuItemViewModel.IsChecked = !dockWindowViewModel.IsClosed;
+            menuItemViewModel.Header = dockViewName;
+            menuItemViewModel.IsChecked = false;
 
-            // 状态双向绑定
-
-            /*
-            dockWindowViewModel.PropertyChanged += (o, e) =>
-            {
-                if (e.PropertyName == nameof(DockWindowViewModel.IsClosed))
-                    menuItemViewModel.IsChecked = !dockWindowViewModel.IsClosed;
-            };
-
-            menuItemViewModel.PropertyChanged += (o, e) =>
-            {
-                if (e.PropertyName == nameof(MenuItemViewModel.IsChecked))
-                    dockWindowViewModel.IsClosed = !menuItemViewModel.IsChecked;
-            };
-            */
             return menuItemViewModel;
         }
     }

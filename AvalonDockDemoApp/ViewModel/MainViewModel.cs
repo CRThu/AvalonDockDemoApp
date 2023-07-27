@@ -18,25 +18,28 @@ namespace AvalonDockDemoApp.ViewModel
 
         public MainViewModel()
         {
-            var documents = new List<DockWindowViewModel>();
-
-            for (int i = 0; i < 3; i++)
+            List<string> MenuItemLayoutViewNamesList = new()
             {
-                documents.Add(new SampleApp1ViewModel() { Title = "SampleApp A" + i.ToString() });
-                documents.Add(new SampleApp2ViewModel() { Title = "SampleApp B" + i.ToString() });
-            }
+                "SampleApp A0",
+                "SampleApp A1",
+                "SampleApp A2",
+                "SampleApp B0",
+                "SampleApp B1",
+                "SampleApp B2"
+            };
+            MenuTopViewModel = new MenuTopViewModel();
+            var layoutVM = new MenuLayoutViewModel();
+            MenuTopViewModel.Add(layoutVM);
+            layoutVM.Add(new MenuViewsViewModel(MenuItemLayoutViewNamesList));
+            layoutVM.Add(new MenuItemViewModel() { Header = "SampleApp C" });
+
+            var documents = new List<DockWindowViewModel>();
+            documents.Add(new SampleApp1ViewModel() { Title = "SampleApp A0" });
 
             var anchorables = new List<DockWindowAnchorableViewModel>();
             anchorables.Add(new SampleAnchorableAppViewModel() { Title = "AnchorableApp" });
 
             this.DockManagerViewModel = new DockManagerViewModel(documents, anchorables);
-            MenuTopViewModel = new MenuTopViewModel();
-            MenuTopViewModel.Add(new MenuItemViewModel() { Header = "A" });
-            MenuTopViewModel.Add(new MenuItemViewModel() { Header = "B" });
-            MenuTopViewModel.Add(new MenuItemViewModel() { Header = "C" });
-            var layoutVM = new MenuLayoutViewModel();
-            MenuTopViewModel.Add(layoutVM);
-            layoutVM.Add(new MenuViewsViewModel(documents));
         }
     }
 }
