@@ -1,42 +1,41 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public class MenuItemViewModel : BaseViewModel
+    public partial class MenuItemViewModel : ObservableObject
     {
-        #region Properties
-
-        public string Header { get; set; }
-        public bool IsCheckable { get; set; }
-        public List<MenuItemViewModel> Items { get; private set; }
-        public ICommand Command { get; private set; }
-
-        #region IsChecked
-        private bool _IsChecked;
-        public bool IsChecked
-        {
-            get { return _IsChecked; }
-            set
-            {
-                if (_IsChecked != value)
-                {
-                    _IsChecked = value;
-                    OnPropertyChanged(nameof(IsChecked));
-                }
-            }
-        }
-        #endregion
-
-        #endregion
+        [ObservableProperty]
+        private string header;
+        [ObservableProperty]
+        private bool isCheckable;
+        [ObservableProperty]
+        private bool isChecked;
+        [ObservableProperty]
+        private List<MenuItemViewModel> items;
 
         public MenuItemViewModel()
         {
+            Header = "<NULL>";
+            IsCheckable = false;
+            IsChecked = false;
             Items = new List<MenuItemViewModel>();
+        }
+
+        [RelayCommand]
+        public void Click()
+        {
+            MessageBox.Show($"Click MenuItem.\n" +
+                $"Header: {Header}\n" +
+                $"IsCheckable: {IsCheckable}\n" +
+                $"IsChecked: {IsChecked}");
         }
     }
 }

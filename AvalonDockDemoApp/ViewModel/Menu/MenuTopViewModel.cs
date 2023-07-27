@@ -7,17 +7,11 @@ using System.Threading.Tasks;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuTopViewModel : ObservableObject
+    public partial class MenuTopViewModel : MenuItemViewModel
     {
-        [ObservableProperty]
-        private string? name;
-
-        [ObservableProperty]
-        private List<MenuItemViewModel> items;
-
         public MenuTopViewModel()
         {
-            Name = "MenuTop";
+            Header = "MenuTop";
             Items = new();
         }
 

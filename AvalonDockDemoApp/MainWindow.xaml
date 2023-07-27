@@ -40,7 +40,7 @@
         <Menu Grid.Row="0" DataContext="{Binding MenuTopViewModel}" ItemsSource="{Binding Items}">
             <Menu.Resources>
                 <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Command" Value="{Binding Command}" />
+                    <Setter Property="Command" Value="{Binding ClickCommand}" />
                     <Setter Property="Header" Value="{Binding Header}" />
                     <Setter Property="IsCheckable" Value="{Binding IsCheckable}" />
                     <Setter Property="IsChecked" Value="{Binding IsChecked}" />

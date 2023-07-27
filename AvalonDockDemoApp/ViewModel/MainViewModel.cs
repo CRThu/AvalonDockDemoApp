@@ -1,5 +1,6 @@
 ﻿using AvalonDockDemoApp.View;
 using AvalonDockDemoApp.ViewModel.Menu;
+using DryIoc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,8 @@ namespace AvalonDockDemoApp.ViewModel
             MenuTopViewModel.Add(new MenuItemViewModel() { Header = "A" });
             MenuTopViewModel.Add(new MenuItemViewModel() { Header = "B" });
             MenuTopViewModel.Add(new MenuItemViewModel() { Header = "C" });
-            MenuTopViewModel.Add(new MenuViewModel(documents));
+            MenuTopViewModel.Add(new MenuViewsViewModel(documents));
+            //MenuTopViewModel.Add(new MenuViewModel());
         }
     }
 }
