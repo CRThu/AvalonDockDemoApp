@@ -10,14 +10,18 @@ using System.Windows.Input;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuItemViewModel : ObservableObject
+    public partial class MenuItemViewModel : ObservableRecipient
     {
         [ObservableProperty]
         private string header;
+
         [ObservableProperty]
         private bool isCheckable;
+
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         private bool isChecked;
+
         [ObservableProperty]
         private List<MenuItemViewModel> items;
 
