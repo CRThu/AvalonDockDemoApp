@@ -12,6 +12,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         {
 
         }
+
         public MenuViewsViewModel(IEnumerable<DockWindowViewModel> dockWindows)
         {
             Header = "Views";
@@ -29,6 +30,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
             menuItemViewModel.IsChecked = !dockWindowViewModel.IsClosed;
 
             // 状态双向绑定
+
             dockWindowViewModel.PropertyChanged += (o, e) =>
             {
                 if (e.PropertyName == nameof(DockWindowViewModel.IsClosed))

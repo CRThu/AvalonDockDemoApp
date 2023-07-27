@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,82 +9,29 @@ using System.Windows.Input;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-  public abstract class DockWindowViewModel : BaseViewModel
-  {
-    #region Properties
-
-    #region CloseCommand
-    private ICommand _CloseCommand;
-    public ICommand CloseCommand
+    public abstract partial class DockWindowViewModel : ObservableObject
     {
-      get
-      {
-        if (_CloseCommand == null)
-          _CloseCommand = new RelayCommand(call => Close());
-        return _CloseCommand;
-      }
-    }
-    #endregion
+        [ObservableProperty]
+        private string title;
 
-    #region IsClosed
-    private bool _IsClosed;
-    public bool IsClosed
-    {
-      get { return _IsClosed; }
-      set
-      {
-        if (_IsClosed != value)
+        [ObservableProperty]
+        private bool isClosed;
+
+        [ObservableProperty]
+        private bool canClose;
+
+
+        public DockWindowViewModel()
         {
-          _IsClosed = value;
-          OnPropertyChanged(nameof(IsClosed));
+            Title = "<NULL>";
+            CanClose = true;
+            IsClosed = false;
         }
-      }
-    }
-    #endregion
 
-    #region CanClose
-    private bool _CanClose;
-    public bool CanClose
-    {
-      get { return _CanClose; }
-      set
-      {
-        if (_CanClose != value)
+        [RelayCommand]
+        public void Close()
         {
-          _CanClose = value;
-          OnPropertyChanged(nameof(CanClose));
+            IsClosed = true;
         }
-      }
     }
-    #endregion
-
-    #region Title
-    private string _Title;
-    public string Title
-    {
-      get { return _Title; }
-      set
-      {
-        if (_Title != value)
-        {
-          _Title = value;
-          OnPropertyChanged(nameof(Title));
-        }
-      }
-    }
-    #endregion
-
-    #endregion
-
-    public DockWindowViewModel()
-    {
-      this.CanClose = true;
-      this.IsClosed = false;
-    }
-
-    public void Close()
-    {
-      this.IsClosed = true;
-    }
-  }
 }
