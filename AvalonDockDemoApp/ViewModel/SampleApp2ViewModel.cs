@@ -13,10 +13,8 @@ namespace AvalonDockDemoApp.ViewModel
         [ObservableProperty]
         public string bindText = "Binding SampleApp2 ABC";
 
-        public SampleApp2ViewModel(string title) : base()
+        public SampleApp2ViewModel(string appId, string title) : base(appId, title)
         {
-            Title = title;
-            VmId = $"{nameof(SampleApp2ViewModel)}#{Title}#{Guid.NewGuid()}";
         }
     }
 }

@@ -34,7 +34,7 @@ namespace AvalonDockDemoApp.ViewModel
             layoutVM.Add(new MenuItemViewModel() { Header = "SampleApp C" });
 
             var documents = new List<DockWindowViewModel>();
-            documents.Add(new SampleApp1ViewModel("SampleApp A0"));
+            documents.Add(new SampleApp1ViewModel("SampleApp A0", "SampleApp A0"));
 
             var anchorables = new List<DockWindowAnchorableViewModel>();
             anchorables.Add(new SampleAnchorableAppViewModel() { Title = "AnchorableApp" });

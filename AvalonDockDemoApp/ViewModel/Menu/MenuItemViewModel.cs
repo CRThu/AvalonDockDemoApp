@@ -40,13 +40,10 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         [RelayCommand]
         public void Click()
         {
-            //MessageBox.Show($"Click MenuItem.\n" +
-            //    $"Header: {Header}\n" +
-            //    $"IsCheckable: {IsCheckable}\n" +
-            //    $"IsChecked: {IsChecked}");
             Debug.WriteLine($"[MenuItemViewModel]: Click MenuItem. Header: {Header}.");
 
-            WeakReferenceMessenger.Default.Send(new RequestDockViewChangeMessage(Header));
+            WeakReferenceMessenger.Default.Send(
+                new RequestDockViewChangeMessage(RequestDockViewChangeType.Open, Header));
         }
     }
 }

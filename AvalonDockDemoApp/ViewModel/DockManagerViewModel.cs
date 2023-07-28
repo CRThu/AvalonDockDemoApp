@@ -63,97 +63,52 @@ namespace AvalonDockDemoApp.ViewModel
             }
         }
 
-        /*
-        private void DockWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            DockWindowViewModel document = sender as DockWindowViewModel;
-
-            if (e.PropertyName == nameof(DockWindowViewModel.IsClosed))
-            {
-                if (!document.IsClosed)
-                    this.Documents.Add(document);
-                else
-                    this.Documents.Remove(document);
-            }
-        }
-        */
-
-        public void Receive(PropertyChangedMessage<bool> message)
-        {
-            /*
-            if (message.Sender is MenuItemViewModel miVM)
-            {
-                if (message.PropertyName == "IsChecked")
-                {
-                    if (message.NewValue)
-                    {
-                        DockWindowViewModel vm;
-                        switch (miVM.Header)
-                        {
-                            case "SampleApp A0":
-                            case "SampleApp A1":
-                            case "SampleApp A2":
-                                vm = new SampleApp1ViewModel() { Title = miVM.Header };
-                                break;
-                            case "SampleApp B0":
-                            case "SampleApp B1":
-                            case "SampleApp B2":
-                                vm = new SampleApp2ViewModel() { Title = miVM.Header };
-                                break;
-                            default:
-                                throw new NotImplementedException();
-                        }
-                        Documents.Add(vm);
-                    }
-                    else
-                    {
-                        DockWindowViewModel? vm = Documents.Where(n => n.Title == miVM.Header).FirstOrDefault();
-                        if (vm != null)
-                            Documents.Remove(vm);
-                        else
-                            MessageBox.Show($"cannot find DockWindowViewModel for {miVM.Header}.");
-                    }
-                }
-            }
-            */
-        }
-
         public void Receive(RequestDockViewChangeMessage message)
         {
-            Debug.WriteLine($"[DockManagerViewModel]: Receive MenuItemCreateViewMessage. Value: {message.Value}.\n");
+            Debug.WriteLine($"[DockManagerViewModel]: Receive RequestDockViewChangeMessage. Type: {message.Type}, Value: {message.Title}.\n");
 
-            DockWindowViewModel? vm = Documents.Where(n => n.Title == message.Value).FirstOrDefault();
-            if (vm == null)
+            DockWindowViewModel? vm = Documents.Where(n => n.Title == message.Title).FirstOrDefault();
+
+            if (message.Type == RequestDockViewChangeType.Open)
             {
-                //MessageBox.Show($"cannot find DockWindowViewModel for {message.Value}.");
-
-                switch (message.Value)
+                // 若vm不存在或为非单例窗口则创建
+                if (vm == null || !vm.IsSingleton)
                 {
-                    case "SampleApp A0":
-                    case "SampleApp A1":
-                    case "SampleApp A2":
-                        vm = new SampleApp1ViewModel(message.Value);
-                        break;
-                    case "SampleApp B0":
-                    case "SampleApp B1":
-                    case "SampleApp B2":
-                        vm = new SampleApp2ViewModel(message.Value);
-                        break;
-                    case "SampleApp C":
-                        vm = new SampleApp3ViewModel($"{message.Value}{SampleCounter}");
-                        SampleCounter++;
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                    switch (message.Title)
+                    {
+                        case "SampleApp A0":
+                        case "SampleApp A1":
+                        case "SampleApp A2":
+                            vm = new SampleApp1ViewModel(message.Title, message.Title);
+                            break;
+                        case "SampleApp B0":
+                        case "SampleApp B1":
+                        case "SampleApp B2":
+                            vm = new SampleApp2ViewModel(message.Title, message.Title);
+                            break;
+                        case "SampleApp C":
+                            vm = new SampleApp3ViewModel(message.Title, $"{message.Title} #{SampleCounter}");
+                            SampleCounter++;
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                    Documents.Add(vm);
+                    // 窗体已存在则获取焦点
+                    ActiveContent = vm;
                 }
-                Documents.Add(vm);
-                // 窗体已存在则获取焦点
-                ActiveContent = vm;
+                else
+                {
+                    // 窗体已存在则获取焦点
+                    ActiveContent = vm;
+                }
             }
-            else
+            else if (message.Type == RequestDockViewChangeType.Close)
             {
-                // 窗体已存在则获取焦点
-                ActiveContent = vm;
+                if (vm != null)
+                    Documents.Remove(vm);
+                else
+                    MessageBox.Show($"cannot find vm which title is {message.Title}.");
             }
         }
     }
