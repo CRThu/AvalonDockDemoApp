@@ -11,13 +11,12 @@ using System.Windows.Input;
 using System.Reflection.PortableExecutable;
 using AvalonDockDemoApp.ViewModel.Menu;
 using System.Windows;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using AvalonDockDemoApp.ViewModel.Message;
 using System.Diagnostics;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public abstract partial class DockWindowViewModel : ObservableRecipient
+    public abstract partial class DockWindowBaseViewModel : ObservableObject
     {
         /// <summary>
         /// 窗体标题
@@ -55,7 +54,7 @@ namespace AvalonDockDemoApp.ViewModel
         [ObservableProperty]
         private bool isSingleton;
 
-        public DockWindowViewModel()
+        public DockWindowBaseViewModel()
         {
             Title = "<NULL>";
             AppId = "<NULL>";
@@ -66,7 +65,7 @@ namespace AvalonDockDemoApp.ViewModel
             VmId = $"{this.GetType().Name}#{AppId}#{Guid.NewGuid()}";
         }
 
-        public DockWindowViewModel(string appId, string title, bool canClose = true, bool isSingleton = true)
+        public DockWindowBaseViewModel(string appId, string title, bool canClose = true, bool isSingleton = true)
         {
             AppId = appId;
             Title = title;

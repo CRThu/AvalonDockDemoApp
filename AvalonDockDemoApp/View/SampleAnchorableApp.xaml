@@ -14,6 +14,7 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="This is a sample view" />
             <TextBlock Text="{Binding BingText}"/>
+            <TextBlock Text="{Binding VmId}"/>
             <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=v:SampleAnchorableApp},Path=ActualHeight}"/>
             <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=v:SampleAnchorableApp},Path=ActualWidth}"/>
             <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=v:SampleAnchorableApp},Path=DataContext.Title}"/>

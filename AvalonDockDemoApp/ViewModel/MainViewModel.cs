@@ -1,4 +1,5 @@
 ﻿using AvalonDockDemoApp.View;
+using AvalonDockDemoApp.ViewModel.Dock;
 using AvalonDockDemoApp.ViewModel.Menu;
 using DryIoc;
 using System;
@@ -33,11 +34,11 @@ namespace AvalonDockDemoApp.ViewModel
             layoutVM.Add(new MenuViewsViewModel(MenuItemLayoutViewNamesList));
             layoutVM.Add(new MenuItemViewModel() { Header = "SampleApp C" });
 
-            var documents = new List<DockWindowViewModel>();
+            var documents = new List<DockWindowDocumentViewModel>();
             documents.Add(new SampleApp1ViewModel("SampleApp A0", "SampleApp A0"));
 
             var anchorables = new List<DockWindowAnchorableViewModel>();
-            anchorables.Add(new SampleAnchorableAppViewModel() { Title = "AnchorableApp" });
+            anchorables.Add(new SampleAnchorableAppViewModel("AnchorableApp", "AnchorableApp"));
 
             this.DockManagerViewModel = new DockManagerViewModel(documents, anchorables);
         }

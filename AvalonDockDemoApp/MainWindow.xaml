@@ -25,7 +25,8 @@
         <Style TargetType="{x:Type ad:LayoutAnchorableItem}" x:Key="AnchorableStyle">
             <Setter Property="Title" Value="{Binding Model.Title}" />
             <Setter Property="CanHide" Value="False" />
-            <Setter Property="CanClose" Value="False" />
+            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
+            <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
         </Style>
 
         <sel:AvalonDockStyleSelector x:Key="AvalonDockStyleSelector" DocumentStyle="{StaticResource DocumentStyle}" AnchorableStyle="{StaticResource AnchorableStyle}"/>

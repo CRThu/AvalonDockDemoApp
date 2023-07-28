@@ -18,21 +18,21 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AvalonDockDemoApp.ViewModel
+namespace AvalonDockDemoApp.ViewModel.Dock
 {
     public partial class DockManagerViewModel : ObservableRecipient, IRecipient<RequestDockViewChangeMessage>
     {
         /// <summary>
         /// documents
         /// </summary>
-        public ObservableCollection<DockWindowViewModel> Documents { get; private set; }
+        public ObservableCollection<DockWindowDocumentViewModel> Documents { get; private set; }
         public ObservableCollection<DockWindowAnchorableViewModel> Anchorables { get; private set; }
 
         /// <summary>
         /// active document
         /// </summary>
         [ObservableProperty]
-        private DockWindowViewModel activeContent;
+        private DockWindowBaseViewModel activeContent;
 
         public DataTemplateSelector DataTemplateSelector { get; set; }
 
@@ -44,13 +44,13 @@ namespace AvalonDockDemoApp.ViewModel
             IsActive = true;
 
             DataTemplateSelector = new AvalonDockDataTemplateSelector();
-            Documents = new ObservableCollection<DockWindowViewModel>();
+            Documents = new ObservableCollection<DockWindowDocumentViewModel>();
             Anchorables = new ObservableCollection<DockWindowAnchorableViewModel>();
 
             SampleCounter = 0;
         }
 
-        public DockManagerViewModel(IEnumerable<DockWindowViewModel> documents, IEnumerable<DockWindowAnchorableViewModel> anchorables) : this()
+        public DockManagerViewModel(IEnumerable<DockWindowDocumentViewModel> documents, IEnumerable<DockWindowAnchorableViewModel> anchorables) : this()
         {
             foreach (var document in documents)
             {
@@ -67,7 +67,7 @@ namespace AvalonDockDemoApp.ViewModel
         {
             Debug.WriteLine($"[DockManagerViewModel]: Receive RequestDockViewChangeMessage. Type: {message.Type}, Value: {message.Title}.\n");
 
-            DockWindowViewModel? vm = Documents.Where(n => n.Title == message.Title).FirstOrDefault();
+            DockWindowDocumentViewModel? vm = Documents.Where(n => n.Title == message.Title).FirstOrDefault();
 
             if (message.Type == RequestDockViewChangeType.Open)
             {

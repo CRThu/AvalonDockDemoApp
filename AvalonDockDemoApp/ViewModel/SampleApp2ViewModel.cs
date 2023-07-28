@@ -1,4 +1,5 @@
 ﻿using AvalonDockDemoApp.View;
+using AvalonDockDemoApp.ViewModel.Dock;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public partial class SampleApp2ViewModel : DockWindowViewModel
+    public partial class SampleApp2ViewModel : DockWindowDocumentViewModel
     {
         [ObservableProperty]
         public string bindText = "Binding SampleApp2 ABC";
