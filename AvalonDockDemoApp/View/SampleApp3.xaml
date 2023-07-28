@@ -13,7 +13,8 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="This is a sample view" />
-            <TextBlock Text="{Binding BingText}"/>
+            <TextBlock Text="{Binding BindText}"/>
+            <TextBlock Text="{Binding VmId}"/>
             <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=v:SampleApp3},Path=ActualHeight}"/>
             <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=v:SampleApp3},Path=ActualWidth}"/>
             <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=v:SampleApp3},Path=DataContext.Title}"/>
