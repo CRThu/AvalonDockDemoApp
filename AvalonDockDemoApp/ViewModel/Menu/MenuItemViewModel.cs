@@ -1,7 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AvalonDockDemoApp.ViewModel.Message;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DryIoc.Messages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +23,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         private bool isCheckable;
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
+        //[NotifyPropertyChangedRecipients]
         private bool isChecked;
 
         [ObservableProperty]
@@ -36,10 +40,13 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         [RelayCommand]
         public void Click()
         {
-            MessageBox.Show($"Click MenuItem.\n" +
-                $"Header: {Header}\n" +
-                $"IsCheckable: {IsCheckable}\n" +
-                $"IsChecked: {IsChecked}");
+            //MessageBox.Show($"Click MenuItem.\n" +
+            //    $"Header: {Header}\n" +
+            //    $"IsCheckable: {IsCheckable}\n" +
+            //    $"IsChecked: {IsChecked}");
+            Debug.WriteLine($"[MenuItemViewModel]: Click MenuItem. Header: {Header}.");
+
+            WeakReferenceMessenger.Default.Send(new MenuItemCreateViewMessage(Header));
         }
     }
 }

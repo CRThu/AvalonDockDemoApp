@@ -27,10 +27,9 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         private MenuItemViewModel GetMenuItemViewModel(string dockViewName)
         {
             var menuItemViewModel = new MenuViewItemViewModel();
-            menuItemViewModel.IsCheckable = true;
-
-            menuItemViewModel.Header = dockViewName;
+            menuItemViewModel.IsCheckable = false;
             menuItemViewModel.IsChecked = false;
+            menuItemViewModel.Header = dockViewName;
 
             return menuItemViewModel;
         }

@@ -1,6 +1,7 @@
 ﻿using AvalonDockDemoApp.Selector;
 using AvalonDockDemoApp.View;
 using AvalonDockDemoApp.ViewModel.Menu;
+using AvalonDockDemoApp.ViewModel.Message;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -18,12 +20,23 @@ using System.Windows.Controls;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public class DockManagerViewModel : ObservableRecipient, IRecipient<PropertyChangedMessage<bool>>
+    public partial class DockManagerViewModel : ObservableRecipient, IRecipient<MenuItemCreateViewMessage>
     {
-        /// <summary>Gets a collection of all visible documents</summary>
+        /// <summary>
+        /// documents
+        /// </summary>
         public ObservableCollection<DockWindowViewModel> Documents { get; private set; }
         public ObservableCollection<DockWindowAnchorableViewModel> Anchorables { get; private set; }
+
+        /// <summary>
+        /// active document
+        /// </summary>
+        [ObservableProperty]
+        private DockWindowViewModel activeContent;
+
         public DataTemplateSelector DataTemplateSelector { get; set; }
+
+        private int SampleCounter { get; set; }
 
         public DockManagerViewModel()
         {
@@ -33,6 +46,8 @@ namespace AvalonDockDemoApp.ViewModel
             DataTemplateSelector = new AvalonDockDataTemplateSelector();
             Documents = new ObservableCollection<DockWindowViewModel>();
             Anchorables = new ObservableCollection<DockWindowAnchorableViewModel>();
+
+            SampleCounter = 0;
         }
 
         public DockManagerViewModel(IEnumerable<DockWindowViewModel> documents, IEnumerable<DockWindowAnchorableViewModel> anchorables) : this()
@@ -65,6 +80,7 @@ namespace AvalonDockDemoApp.ViewModel
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
+            /*
             if (message.Sender is MenuItemViewModel miVM)
             {
                 if (message.PropertyName == "IsChecked")
@@ -99,8 +115,46 @@ namespace AvalonDockDemoApp.ViewModel
                     }
                 }
             }
+            */
+        }
+
+        public void Receive(MenuItemCreateViewMessage message)
+        {
+            Debug.WriteLine($"[DockManagerViewModel]: Receive MenuItemCreateViewMessage. Value: {message.Value}.\n");
+
+            DockWindowViewModel? vm = Documents.Where(n => n.Title == message.Value).FirstOrDefault();
+            if (vm == null)
+            {
+                //MessageBox.Show($"cannot find DockWindowViewModel for {message.Value}.");
+
+                switch (message.Value)
+                {
+                    case "SampleApp A0":
+                    case "SampleApp A1":
+                    case "SampleApp A2":
+                        vm = new SampleApp1ViewModel() { Title = message.Value };
+                        break;
+                    case "SampleApp B0":
+                    case "SampleApp B1":
+                    case "SampleApp B2":
+                        vm = new SampleApp2ViewModel() { Title = message.Value };
+                        break;
+                    case "SampleApp C":
+                        vm = new SampleApp2ViewModel() { Title = $"{message.Value}{SampleCounter}" };
+                        SampleCounter++;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+                Documents.Add(vm);
+                // 窗体已存在则获取焦点
+                ActiveContent = vm;
+            }
+            else
+            {
+                // 窗体已存在则获取焦点
+                ActiveContent = vm;
+            }
         }
     }
-
-
 }

@@ -54,6 +54,7 @@
                          DataContext="{Binding DockManagerViewModel}"
                          DocumentsSource="{Binding Documents}"
                          AnchorablesSource="{Binding Anchorables}"
+                         ActiveContent="{Binding ActiveContent,Mode=TwoWay}"
                          LayoutItemContainerStyleSelector="{StaticResource AvalonDockStyleSelector}"
                          LayoutItemTemplateSelector ="{Binding DataTemplateSelector}"
                          >
@@ -66,7 +67,9 @@
             </ad:DockingManager.LayoutItemTemplateSelector>-->
 
             <!--<ad:DockingManager.Resources>
-                --><!--add views for specific ViewModels--><!--
+                -->
+            <!--add views for specific ViewModels-->
+            <!--
                 <DataTemplate DataType="{x:Type vm:SampleApp1ViewModel}">
                     <v:SampleApp1/>
                 </DataTemplate>

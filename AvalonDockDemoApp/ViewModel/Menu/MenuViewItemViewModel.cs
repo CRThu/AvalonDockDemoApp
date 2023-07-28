@@ -18,7 +18,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
-
+            /*
             if (message.Sender is DockWindowViewModel dockVM)
             {
                 if (dockVM.Title == Header)
@@ -26,7 +26,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
                     IsChecked = !message.NewValue;
                 }
             }
-
+            */
         }
     }
 }
