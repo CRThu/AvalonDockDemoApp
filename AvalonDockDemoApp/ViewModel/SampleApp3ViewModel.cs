@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public partial class SampleApp1ViewModel : DockWindowViewModel
+    public partial class SampleApp3ViewModel : DockWindowViewModel
     {
         [ObservableProperty]
-        public string bindText = "Binding SampleApp1 ABC";
+        public string bindText = "Binding SampleApp3 ABC";
 
-        public SampleApp1ViewModel(string title) : base()
+        public SampleApp3ViewModel(string title) : base()
         {
             Title = title;
-            VmId = $"{nameof(SampleApp1ViewModel)}#{Title}#{Guid.NewGuid()}";
+            VmId = $"{nameof(SampleApp3ViewModel)}#{Title}#{Guid.NewGuid()}";
         }
     }
 }

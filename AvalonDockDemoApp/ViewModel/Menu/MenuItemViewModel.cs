@@ -46,7 +46,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
             //    $"IsChecked: {IsChecked}");
             Debug.WriteLine($"[MenuItemViewModel]: Click MenuItem. Header: {Header}.");
 
-            WeakReferenceMessenger.Default.Send(new MenuItemCreateViewMessage(Header));
+            WeakReferenceMessenger.Default.Send(new RequestDockViewChangeMessage(Header));
         }
     }
 }

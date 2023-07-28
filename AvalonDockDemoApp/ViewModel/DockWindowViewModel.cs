@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Reflection.PortableExecutable;
 using AvalonDockDemoApp.ViewModel.Menu;
+using System.Windows;
 
 namespace AvalonDockDemoApp.ViewModel
 {
@@ -25,10 +26,13 @@ namespace AvalonDockDemoApp.ViewModel
         [ObservableProperty]
         private bool canClose;
 
+        [ObservableProperty]
+        private string vmId;
 
         public DockWindowViewModel()
         {
             Title = "<NULL>";
+            VmId = $"{nameof(DockWindowViewModel)}#{Title}#{Guid.NewGuid()}";
             CanClose = true;
             IsClosed = false;
         }

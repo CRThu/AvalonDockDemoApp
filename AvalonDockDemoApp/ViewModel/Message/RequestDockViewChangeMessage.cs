@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AvalonDockDemoApp.ViewModel.Message
 {
-    public class MenuItemCreateViewMessage : ValueChangedMessage<string>
+    public class RequestDockViewChangeMessage : ValueChangedMessage<string>
     {
-        public MenuItemCreateViewMessage(string str) : base(str)
+        public RequestDockViewChangeMessage(string str) : base(str)
         {
 
         }

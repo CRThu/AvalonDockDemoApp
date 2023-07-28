@@ -25,6 +25,10 @@ namespace AvalonDockDemoApp.Selector
             {
                 VisualTree = new FrameworkElementFactory(typeof(SampleApp2))
             };
+            DataTemplate SampleApp3Dt = new DataTemplate(typeof(SampleApp3ViewModel))
+            {
+                VisualTree = new FrameworkElementFactory(typeof(SampleApp3))
+            };
             DataTemplate SampleAnchorableAppDt = new DataTemplate(typeof(SampleAnchorableAppViewModel))
             {
                 VisualTree = new FrameworkElementFactory(typeof(SampleAnchorableApp))
@@ -37,6 +41,10 @@ namespace AvalonDockDemoApp.Selector
             else if (item is SampleApp2ViewModel)
             {
                 return SampleApp2Dt;
+            }
+            else if (item is SampleApp3ViewModel)
+            {
+                return SampleApp3Dt;
             }
             else if (item is SampleAnchorableAppViewModel)
             {

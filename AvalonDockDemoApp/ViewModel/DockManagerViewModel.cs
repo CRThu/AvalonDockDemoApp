@@ -20,7 +20,7 @@ using System.Windows.Controls;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public partial class DockManagerViewModel : ObservableRecipient, IRecipient<MenuItemCreateViewMessage>
+    public partial class DockManagerViewModel : ObservableRecipient, IRecipient<RequestDockViewChangeMessage>
     {
         /// <summary>
         /// documents
@@ -118,7 +118,7 @@ namespace AvalonDockDemoApp.ViewModel
             */
         }
 
-        public void Receive(MenuItemCreateViewMessage message)
+        public void Receive(RequestDockViewChangeMessage message)
         {
             Debug.WriteLine($"[DockManagerViewModel]: Receive MenuItemCreateViewMessage. Value: {message.Value}.\n");
 
@@ -132,15 +132,15 @@ namespace AvalonDockDemoApp.ViewModel
                     case "SampleApp A0":
                     case "SampleApp A1":
                     case "SampleApp A2":
-                        vm = new SampleApp1ViewModel() { Title = message.Value };
+                        vm = new SampleApp1ViewModel(message.Value);
                         break;
                     case "SampleApp B0":
                     case "SampleApp B1":
                     case "SampleApp B2":
-                        vm = new SampleApp2ViewModel() { Title = message.Value };
+                        vm = new SampleApp2ViewModel(message.Value);
                         break;
                     case "SampleApp C":
-                        vm = new SampleApp2ViewModel() { Title = $"{message.Value}{SampleCounter}" };
+                        vm = new SampleApp3ViewModel($"{message.Value}{SampleCounter}");
                         SampleCounter++;
                         break;
                     default:
