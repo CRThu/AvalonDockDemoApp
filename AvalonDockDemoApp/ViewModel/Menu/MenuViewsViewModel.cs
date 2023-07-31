@@ -26,7 +26,8 @@ namespace AvalonDockDemoApp.ViewModel.Menu
                 Items.Add(GetMenuItemViewModel(dockViewName));
             }
 
-            Separator separator = new Separator();
+            //Separator separator = new Separator();
+            //Items.Add(separator);
         }
 
         private MenuItemBaseViewModel GetMenuItemViewModel(string dockViewName)

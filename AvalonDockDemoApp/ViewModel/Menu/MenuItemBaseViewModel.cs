@@ -28,14 +28,14 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         private bool isChecked;
 
         [ObservableProperty]
-        private List<MenuItemBaseViewModel> items;
+        private List<object> items;
 
         public MenuItemBaseViewModel()
         {
             Header = "<NULL>";
             IsCheckable = false;
             IsChecked = false;
-            Items = new List<MenuItemBaseViewModel>();
+            Items = new List<object>();
         }
 
 
