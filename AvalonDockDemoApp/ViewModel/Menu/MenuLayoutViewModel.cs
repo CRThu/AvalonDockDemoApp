@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuLayoutViewModel : MenuItemViewModel
+    public partial class MenuLayoutViewModel : MenuItemBaseViewModel
     {
         public MenuLayoutViewModel()
         {
@@ -14,7 +14,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
             Items = new();
         }
 
-        public void Add(MenuItemViewModel itemViewModel)
+        public void Add(MenuItemBaseViewModel itemViewModel)
         {
             Items.Add(itemViewModel);
         }

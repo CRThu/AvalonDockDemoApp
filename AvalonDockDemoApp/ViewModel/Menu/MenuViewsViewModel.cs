@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuViewsViewModel : MenuItemViewModel
+    public partial class MenuViewsViewModel : MenuItemBaseViewModel
     {
         public MenuViewsViewModel()
         {
@@ -22,9 +23,11 @@ namespace AvalonDockDemoApp.ViewModel.Menu
             {
                 Items.Add(GetMenuItemViewModel(dockViewName));
             }
+
+            Separator separator= new Separator();
         }
 
-        private MenuItemViewModel GetMenuItemViewModel(string dockViewName)
+        private MenuItemBaseViewModel GetMenuItemViewModel(string dockViewName)
         {
             var menuItemViewModel = new MenuViewItemViewModel();
             menuItemViewModel.IsCheckable = false;

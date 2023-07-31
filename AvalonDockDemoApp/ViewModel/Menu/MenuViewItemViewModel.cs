@@ -5,28 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvalonDockDemoApp.ViewModel.Message;
+using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuViewItemViewModel : MenuItemViewModel, IRecipient<PropertyChangedMessage<bool>>
+    public partial class MenuViewItemViewModel : MenuItemBaseViewModel
     {
-        public MenuViewItemViewModel()
+        public MenuViewItemViewModel() : base()
         {
-            // Messenger Receive Set
-            IsActive = true;
+
         }
 
-        public void Receive(PropertyChangedMessage<bool> message)
+        public override void OnItemClicked()
         {
-            /*
-            if (message.Sender is DockWindowViewModel dockVM)
-            {
-                if (dockVM.Title == Header)
-                {
-                    IsChecked = !message.NewValue;
-                }
-            }
-            */
+            WeakReferenceMessenger.Default.Send(
+                new RequestDockViewChangeMessage(RequestDockViewChangeType.Open, Header));
         }
     }
 }

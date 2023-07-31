@@ -47,7 +47,8 @@
                     <Setter Property="IsChecked" Value="{Binding IsChecked}" />
                 </Style>
                 <HierarchicalDataTemplate DataType="{x:Type vmm:MenuTopViewModel}" ItemsSource="{Binding Items}" />
-                <HierarchicalDataTemplate DataType="{x:Type vmm:MenuItemViewModel}" ItemsSource="{Binding Items}" />
+                <HierarchicalDataTemplate DataType="{x:Type vmm:MenuLayoutViewModel}" ItemsSource="{Binding Items}" />
+                <HierarchicalDataTemplate DataType="{x:Type vmm:MenuViewsViewModel}" ItemsSource="{Binding Items}" />
             </Menu.Resources>
         </Menu>
 

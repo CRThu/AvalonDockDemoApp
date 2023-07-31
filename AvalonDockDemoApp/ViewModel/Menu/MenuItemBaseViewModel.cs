@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuItemViewModel : ObservableRecipient
+    public partial class MenuItemBaseViewModel : ObservableObject
     {
         [ObservableProperty]
         private string header;
@@ -27,23 +28,28 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         private bool isChecked;
 
         [ObservableProperty]
-        private List<MenuItemViewModel> items;
+        private List<MenuItemBaseViewModel> items;
 
-        public MenuItemViewModel()
+        public MenuItemBaseViewModel()
         {
             Header = "<NULL>";
             IsCheckable = false;
             IsChecked = false;
-            Items = new List<MenuItemViewModel>();
+            Items = new List<MenuItemBaseViewModel>();
         }
+
 
         [RelayCommand]
         public void Click()
         {
-            Debug.WriteLine($"[MenuItemViewModel]: Click MenuItem. Header: {Header}.");
+            Debug.WriteLine($"[MenuItemBaseViewModel]: Click MenuItem. Header: {Header}.");
 
-            WeakReferenceMessenger.Default.Send(
-                new RequestDockViewChangeMessage(RequestDockViewChangeType.Open, Header));
+            OnItemClicked();
+        }
+
+        public virtual void OnItemClicked()
+        {
+
         }
     }
 }

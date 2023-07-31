@@ -32,7 +32,7 @@ namespace AvalonDockDemoApp.ViewModel
             var layoutVM = new MenuLayoutViewModel();
             MenuTopViewModel.Add(layoutVM);
             layoutVM.Add(new MenuViewsViewModel(MenuItemLayoutViewNamesList));
-            layoutVM.Add(new MenuItemViewModel() { Header = "SampleApp C" });
+            layoutVM.Add(new MenuViewItemViewModel() { Header = "SampleApp C" });
 
             var documents = new List<DockWindowDocumentViewModel>();
             documents.Add(new SampleApp1ViewModel("SampleApp A0", "SampleApp A0"));
