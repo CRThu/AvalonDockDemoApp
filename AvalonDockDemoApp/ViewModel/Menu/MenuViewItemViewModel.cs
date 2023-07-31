@@ -13,16 +13,18 @@ namespace AvalonDockDemoApp.ViewModel.Menu
 {
     public partial class MenuViewItemViewModel : MenuItemBaseViewModel
     {
+        public DockViewWindowType WindowType;
+
         public MenuViewItemViewModel() : base()
         {
-
+            WindowType = new();
         }
 
         public override void OnItemClicked()
         {
             base.OnItemClicked();
             WeakReferenceMessenger.Default.Send(
-                new RequestDockViewChangeMessage(RequestDockViewChangeType.Open, Header));
+                new DockWindowViewChangingMessage(DockViewChangeType.Open, WindowType, Header));
         }
     }
 }

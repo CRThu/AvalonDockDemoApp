@@ -54,6 +54,8 @@ namespace AvalonDockDemoApp.ViewModel
         [ObservableProperty]
         private bool isSingleton;
 
+        public DockViewWindowType WindowType;
+
         public DockWindowBaseViewModel()
         {
             Title = "<NULL>";
@@ -61,16 +63,18 @@ namespace AvalonDockDemoApp.ViewModel
             IsSingleton = true;
             CanClose = true;
             IsClosed = false;
+            WindowType = DockViewWindowType.Document;
 
             VmId = $"{this.GetType().Name}#{AppId}#{Guid.NewGuid()}";
         }
 
-        public DockWindowBaseViewModel(string appId, string title, bool canClose = true, bool isSingleton = true)
+        public DockWindowBaseViewModel(string appId, string title, bool canClose = true, bool isSingleton = true, DockViewWindowType windowType = DockViewWindowType.Document)
         {
             AppId = appId;
             Title = title;
             CanClose = canClose;
             IsSingleton = isSingleton;
+            WindowType = windowType;
 
             VmId = $"{this.GetType().Name}#{AppId}#{Guid.NewGuid()}";
         }
@@ -85,6 +89,8 @@ namespace AvalonDockDemoApp.ViewModel
         public virtual void OnDockWindowClosed()
         {
             Debug.WriteLine($"[DockWindowBaseViewModel]: Click MenuItem. Title: {Title}.");
+            WeakReferenceMessenger.Default.Send(
+                new DockWindowViewChangingMessage(DockViewChangeType.Close, WindowType, Title));
         }
     }
 }

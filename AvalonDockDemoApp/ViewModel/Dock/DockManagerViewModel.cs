@@ -20,13 +20,21 @@ using System.Windows.Controls;
 
 namespace AvalonDockDemoApp.ViewModel.Dock
 {
-    public partial class DockManagerViewModel : ObservableRecipient, IRecipient<RequestDockViewChangeMessage>
+    public partial class DockManagerViewModel : ObservableRecipient, IRecipient<DockWindowViewChangingMessage>
     {
         /// <summary>
         /// documents
         /// </summary>
-        public ObservableCollection<DockWindowDocumentViewModel> Documents { get; private set; }
-        public ObservableCollection<DockWindowAnchorableViewModel> Anchorables { get; private set; }
+        public ObservableCollection<DockWindowBaseViewModel> Documents { get; private set; }
+        public ObservableCollection<DockWindowBaseViewModel> Anchorables { get; private set; }
+
+        public IEnumerable<DockWindowBaseViewModel> Windows
+        {
+            get
+            {
+                return Documents.Concat(Anchorables);
+            }
+        }
 
         /// <summary>
         /// active document
@@ -44,13 +52,13 @@ namespace AvalonDockDemoApp.ViewModel.Dock
             IsActive = true;
 
             DataTemplateSelector = new AvalonDockDataTemplateSelector();
-            Documents = new ObservableCollection<DockWindowDocumentViewModel>();
-            Anchorables = new ObservableCollection<DockWindowAnchorableViewModel>();
+            Documents = new ObservableCollection<DockWindowBaseViewModel>();
+            Anchorables = new ObservableCollection<DockWindowBaseViewModel>();
 
             SampleCounter = 0;
         }
 
-        public DockManagerViewModel(IEnumerable<DockWindowDocumentViewModel> documents, IEnumerable<DockWindowAnchorableViewModel> anchorables) : this()
+        public DockManagerViewModel(IEnumerable<DockWindowBaseViewModel> documents, IEnumerable<DockWindowBaseViewModel> anchorables) : this()
         {
             foreach (var document in documents)
             {
@@ -63,13 +71,18 @@ namespace AvalonDockDemoApp.ViewModel.Dock
             }
         }
 
-        public void Receive(RequestDockViewChangeMessage message)
+        public void Receive(DockWindowViewChangingMessage message)
         {
-            Debug.WriteLine($"[DockManagerViewModel]: Receive RequestDockViewChangeMessage. Type: {message.Type}, Value: {message.Title}.\n");
+            Debug.WriteLine($"[DockManagerViewModel]: Receive DockWindowViewChangingMessage. Type: {message.ChangeType}, Value: {message.Title}.\n");
+            OnDockWindowViewChange(message);
+        }
 
-            DockWindowDocumentViewModel? vm = Documents.Where(n => n.Title == message.Title).FirstOrDefault();
+        public void OnDockWindowViewChange(DockWindowViewChangingMessage message)
+        {
+            DockWindowBaseViewModel? vm = Windows.Where(n => n.Title == message.Title).FirstOrDefault();
+            DockWindowBaseViewModel newVm;
 
-            if (message.Type == RequestDockViewChangeType.Open)
+            if (message.ChangeType == DockViewChangeType.Open)
             {
                 // 若vm不存在或为非单例窗口则创建
                 if (vm == null || !vm.IsSingleton)
@@ -79,23 +92,34 @@ namespace AvalonDockDemoApp.ViewModel.Dock
                         case "SampleApp A0":
                         case "SampleApp A1":
                         case "SampleApp A2":
-                            vm = new SampleApp1ViewModel(message.Title, message.Title);
+                            newVm = new SampleApp1ViewModel(message.Title, message.Title);
                             break;
                         case "SampleApp B0":
                         case "SampleApp B1":
                         case "SampleApp B2":
-                            vm = new SampleApp2ViewModel(message.Title, message.Title);
+                            newVm = new SampleApp2ViewModel(message.Title, message.Title);
                             break;
                         case "SampleApp C":
-                            vm = new SampleApp3ViewModel(message.Title, $"{message.Title} #{SampleCounter}");
+                            newVm = new SampleApp3ViewModel(message.Title, $"{message.Title} #{SampleCounter}");
                             SampleCounter++;
                             break;
+                        case "AnchorableApp":
+                            newVm = new SampleAnchorableAppViewModel(message.Title, message.Title);
+                            break;
                         default:
-                            throw new NotImplementedException();
+                            MessageBox.Show($"cannot find vm which title is {message.Title}.");
+                            return;
                     }
-                    Documents.Add(vm);
+
+                    if (message.WindowType == DockViewWindowType.Document)
+                        Documents.Add(newVm);
+                    else if (message.WindowType == DockViewWindowType.Anchorable)
+                        Anchorables.Add(newVm);
+                    else
+                        throw new NotImplementedException();
+
                     // 窗体已存在则获取焦点
-                    ActiveContent = vm;
+                    ActiveContent = newVm;
                 }
                 else
                 {
@@ -103,10 +127,15 @@ namespace AvalonDockDemoApp.ViewModel.Dock
                     ActiveContent = vm;
                 }
             }
-            else if (message.Type == RequestDockViewChangeType.Close)
+            else if (message.ChangeType == DockViewChangeType.Close)
             {
-                if (vm != null)
+                DockWindowBaseViewModel? docVm = Documents.Where(n => n.Title == message.Title).FirstOrDefault();
+                DockWindowBaseViewModel? anchVm = Anchorables.Where(n => n.Title == message.Title).FirstOrDefault();
+
+                if (docVm != null)
                     Documents.Remove(vm);
+                else if (anchVm != null)
+                    Anchorables.Remove(anchVm);
                 else
                     MessageBox.Show($"cannot find vm which title is {message.Title}.");
             }

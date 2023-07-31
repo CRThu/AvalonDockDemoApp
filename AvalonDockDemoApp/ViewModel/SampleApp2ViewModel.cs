@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public partial class SampleApp2ViewModel : DockWindowDocumentViewModel
+    public partial class SampleApp2ViewModel : DockWindowBaseViewModel
     {
         [ObservableProperty]
         public string bindText = "Binding SampleApp2 ABC";
