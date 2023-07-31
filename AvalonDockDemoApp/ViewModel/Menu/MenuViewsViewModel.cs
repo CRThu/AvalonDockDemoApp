@@ -1,4 +1,5 @@
 ﻿using AvalonDockDemoApp.ViewModel.Message;
+using AvalonDockDemoApp.ViewModel.Dock;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System;
@@ -16,25 +17,24 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         {
         }
 
-        public MenuViewsViewModel(IDictionary<string, DockViewWindowType> dockViewNames) : this()
+        public MenuViewsViewModel(IEnumerable<string> dockViewNames) : this()
         {
             Header = "Views";
 
             foreach (var dockViewName in dockViewNames)
             {
-                Items.Add(GetMenuItemViewModel(dockViewName.Key, dockViewName.Value));
+                Items.Add(GetMenuItemViewModel(dockViewName));
             }
 
             Separator separator = new Separator();
         }
 
-        private MenuItemBaseViewModel GetMenuItemViewModel(string dockViewName, DockViewWindowType type)
+        private MenuItemBaseViewModel GetMenuItemViewModel(string dockViewName)
         {
             var menuItemViewModel = new MenuViewItemViewModel();
             menuItemViewModel.IsCheckable = false;
             menuItemViewModel.IsChecked = false;
             menuItemViewModel.Header = dockViewName;
-            menuItemViewModel.WindowType = type;
 
             return menuItemViewModel;
         }

@@ -36,6 +36,7 @@ namespace AvalonDockDemoApp.ViewModel.Dock
             }
         }
 
+
         /// <summary>
         /// active document
         /// </summary>
@@ -43,6 +44,10 @@ namespace AvalonDockDemoApp.ViewModel.Dock
         private DockWindowBaseViewModel activeContent;
 
         public DataTemplateSelector DataTemplateSelector { get; set; }
+
+        public DockWindowAppsFactory VmFactory { get; set; }
+
+        public IEnumerable<string> AppNames => VmFactory.AppNames;
 
         private int SampleCounter { get; set; }
 
@@ -54,6 +59,8 @@ namespace AvalonDockDemoApp.ViewModel.Dock
             DataTemplateSelector = new AvalonDockDataTemplateSelector();
             Documents = new ObservableCollection<DockWindowBaseViewModel>();
             Anchorables = new ObservableCollection<DockWindowBaseViewModel>();
+
+            VmFactory = new();
 
             SampleCounter = 0;
         }
@@ -80,40 +87,20 @@ namespace AvalonDockDemoApp.ViewModel.Dock
         public void OnDockWindowViewChange(DockWindowViewChangingMessage message)
         {
             DockWindowBaseViewModel? vm = Windows.Where(n => n.Title == message.Title).FirstOrDefault();
-            DockWindowBaseViewModel newVm;
+            DockWindowBaseViewModel? newVm;
 
             if (message.ChangeType == DockViewChangeType.Open)
             {
                 // 若vm不存在或为非单例窗口则创建
                 if (vm == null || !vm.IsSingleton)
                 {
-                    switch (message.Title)
-                    {
-                        case "SampleApp A0":
-                        case "SampleApp A1":
-                        case "SampleApp A2":
-                            newVm = new SampleApp1ViewModel(message.Title, message.Title);
-                            break;
-                        case "SampleApp B0":
-                        case "SampleApp B1":
-                        case "SampleApp B2":
-                            newVm = new SampleApp2ViewModel(message.Title, message.Title);
-                            break;
-                        case "SampleApp C":
-                            newVm = new SampleApp3ViewModel(message.Title, $"{message.Title} #{SampleCounter}");
-                            SampleCounter++;
-                            break;
-                        case "AnchorableApp":
-                            newVm = new SampleAnchorableAppViewModel(message.Title, message.Title);
-                            break;
-                        default:
-                            MessageBox.Show($"cannot find vm which title is {message.Title}.");
-                            return;
-                    }
-
-                    if (message.WindowType == DockViewWindowType.Document)
+                    newVm = VmFactory.CreateInstance(message.Title, message.Title, message.Title);
+                    if (newVm == null)
+                        return;
+                    var windowType = VmFactory.GetWindowType(message.Title);
+                    if (windowType == DockViewWindowType.Document)
                         Documents.Add(newVm);
-                    else if (message.WindowType == DockViewWindowType.Anchorable)
+                    else if (windowType == DockViewWindowType.Anchorable)
                         Anchorables.Add(newVm);
                     else
                         throw new NotImplementedException();
@@ -140,5 +127,11 @@ namespace AvalonDockDemoApp.ViewModel.Dock
                     MessageBox.Show($"cannot find vm which title is {message.Title}.");
             }
         }
+
+        public void AppRegister(string appName, DockViewWindowType windowType, Type vmClassType)
+            => VmFactory.Register(appName, windowType, vmClassType);
+
+        public void AppRegister(IDictionary<string, (DockViewWindowType, Type)> appInfos)
+            => VmFactory.Register(appInfos);
     }
 }

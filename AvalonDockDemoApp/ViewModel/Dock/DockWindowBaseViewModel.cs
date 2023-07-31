@@ -12,6 +12,7 @@ using System.Reflection.PortableExecutable;
 using AvalonDockDemoApp.ViewModel.Menu;
 using System.Windows;
 using AvalonDockDemoApp.ViewModel.Message;
+using AvalonDockDemoApp.ViewModel.Dock;
 using System.Diagnostics;
 
 namespace AvalonDockDemoApp.ViewModel
@@ -90,7 +91,7 @@ namespace AvalonDockDemoApp.ViewModel
         {
             Debug.WriteLine($"[DockWindowBaseViewModel]: Click MenuItem. Title: {Title}.");
             WeakReferenceMessenger.Default.Send(
-                new DockWindowViewChangingMessage(DockViewChangeType.Close, WindowType, Title));
+                new DockWindowViewChangingMessage(DockViewChangeType.Close, Title));
         }
     }
 }

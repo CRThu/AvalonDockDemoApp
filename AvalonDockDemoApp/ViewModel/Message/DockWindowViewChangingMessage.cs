@@ -13,12 +13,6 @@ namespace AvalonDockDemoApp.ViewModel.Message
         Close
     }
 
-    public enum DockViewWindowType
-    {
-        Document,
-        Anchorable
-    }
-
     public class DockWindowViewChangingMessage
     {
         /// <summary>
@@ -26,21 +20,15 @@ namespace AvalonDockDemoApp.ViewModel.Message
         /// </summary>
         public DockViewChangeType ChangeType { get; }
 
-        /// <summary>
-        /// window/anchorable
-        /// </summary>
-        public DockViewWindowType WindowType { get; }
-
         public string Title { get; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="value"></param>
-        public DockWindowViewChangingMessage(DockViewChangeType changeType, DockViewWindowType windowType, string title)
+        public DockWindowViewChangingMessage(DockViewChangeType changeType, string title)
         {
             ChangeType = changeType;
-            WindowType = windowType;
             Title = title;
         }
     }

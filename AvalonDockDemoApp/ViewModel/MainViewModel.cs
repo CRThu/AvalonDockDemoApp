@@ -20,23 +20,19 @@ namespace AvalonDockDemoApp.ViewModel
 
         public MainViewModel()
         {
-            Dictionary<string, DockViewWindowType> MenuItemLayoutViews = new()
+            Dictionary<string, (DockViewWindowType, Type)> MenuItemLayoutViews = new()
             {
                 // DockWindowDocument
-                { "SampleApp A0", DockViewWindowType.Document },
-                { "SampleApp A1", DockViewWindowType.Document },
-                { "SampleApp A2", DockViewWindowType.Document },
-                { "SampleApp B0", DockViewWindowType.Document },
-                { "SampleApp B1", DockViewWindowType.Document },
-                { "SampleApp B2", DockViewWindowType.Document },
+                { "SampleApp A0", ( DockViewWindowType.Document, typeof(SampleApp1ViewModel) ) },
+                { "SampleApp A1", ( DockViewWindowType.Document, typeof(SampleApp1ViewModel) ) },
+                { "SampleApp A2", ( DockViewWindowType.Document, typeof(SampleApp1ViewModel) ) },
+                { "SampleApp B0", ( DockViewWindowType.Document, typeof(SampleApp2ViewModel) ) },
+                { "SampleApp B1", ( DockViewWindowType.Document, typeof(SampleApp2ViewModel) ) },
+                { "SampleApp B2", ( DockViewWindowType.Document, typeof(SampleApp2ViewModel) ) },
+                { "SampleApp C" , ( DockViewWindowType.Document, typeof(SampleApp3ViewModel) ) },
                 // DockWindowAnchorable
-                { "AnchorableApp", DockViewWindowType.Anchorable },
+                { "AnchorableApp", ( DockViewWindowType.Anchorable, typeof(SampleAnchorableAppViewModel) ) },
             };
-            MenuTopViewModel = new MenuTopViewModel();
-            var layoutVM = new MenuLayoutViewModel();
-            MenuTopViewModel.Add(layoutVM);
-            layoutVM.Add(new MenuViewsViewModel(MenuItemLayoutViews));
-            layoutVM.Add(new MenuViewItemViewModel() { Header = "SampleApp C" });
 
             var documents = new List<DockWindowBaseViewModel>();
             documents.Add(new SampleApp1ViewModel("SampleApp A0", "SampleApp A0"));
@@ -45,6 +41,13 @@ namespace AvalonDockDemoApp.ViewModel
             anchorables.Add(new SampleAnchorableAppViewModel("AnchorableApp", "AnchorableApp"));
 
             this.DockManagerViewModel = new DockManagerViewModel(documents, anchorables);
+            DockManagerViewModel.AppRegister(MenuItemLayoutViews);
+
+            MenuTopViewModel = new MenuTopViewModel();
+            var layoutVM = new MenuLayoutViewModel();
+            MenuTopViewModel.Add(layoutVM);
+            layoutVM.Add(new MenuViewsViewModel(DockManagerViewModel.AppNames));
+            // layoutVM.Add(new MenuViewItemViewModel() { Header = "SampleApp C" });
         }
     }
 }
