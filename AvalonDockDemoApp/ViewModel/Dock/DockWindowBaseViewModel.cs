@@ -78,16 +78,13 @@ namespace AvalonDockDemoApp.ViewModel
         [RelayCommand]
         public void Close()
         {
-            SendRequestCloseDockView();
             IsClosed = true;
+            OnDockWindowClosed();
         }
 
-        public void SendRequestCloseDockView()
+        public virtual void OnDockWindowClosed()
         {
-            Debug.WriteLine($"[DockWindowViewModel]: Click MenuItem. Title: {Title}.");
-
-            WeakReferenceMessenger.Default.Send(
-                new RequestDockViewChangeMessage(RequestDockViewChangeType.Close, Title));
+            Debug.WriteLine($"[DockWindowBaseViewModel]: Click MenuItem. Title: {Title}.");
         }
     }
 }

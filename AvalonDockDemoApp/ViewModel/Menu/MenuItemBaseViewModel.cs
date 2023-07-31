@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace AvalonDockDemoApp.ViewModel.Menu
 {
-    public partial class MenuItemBaseViewModel : ObservableObject
+    public abstract partial class MenuItemBaseViewModel : ObservableObject
     {
         [ObservableProperty]
         private string header;
@@ -42,14 +42,12 @@ namespace AvalonDockDemoApp.ViewModel.Menu
         [RelayCommand]
         public void Click()
         {
-            Debug.WriteLine($"[MenuItemBaseViewModel]: Click MenuItem. Header: {Header}.");
-
             OnItemClicked();
         }
 
         public virtual void OnItemClicked()
         {
-
+            Debug.WriteLine($"[MenuItemBaseViewModel]: Click MenuItem. Header: {Header}.");
         }
     }
 }

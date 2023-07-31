@@ -20,6 +20,7 @@ namespace AvalonDockDemoApp.ViewModel.Menu
 
         public override void OnItemClicked()
         {
+            base.OnItemClicked();
             WeakReferenceMessenger.Default.Send(
                 new RequestDockViewChangeMessage(RequestDockViewChangeType.Open, Header));
         }
