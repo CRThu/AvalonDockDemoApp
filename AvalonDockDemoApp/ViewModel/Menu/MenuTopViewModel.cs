@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using DryIoc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,12 @@ namespace AvalonDockDemoApp.ViewModel.Menu
             Items = new();
         }
 
-        public void Add(MenuItemBaseViewModel itemViewModel)
+        public MenuTopViewModel(IEnumerable<MenuItemBaseViewModel> itemViewModel) : this()
         {
-            Items.Add(itemViewModel);
+            foreach (var item in itemViewModel)
+            {
+                Items.Add(item);
+            }
         }
     }
 }

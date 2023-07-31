@@ -53,13 +53,13 @@
         </Menu>
 
         <ad:DockingManager Grid.Row="1"
-                         DataContext="{Binding DockManagerViewModel}"
-                         DocumentsSource="{Binding Documents}"
-                         AnchorablesSource="{Binding Anchorables}"
-                         ActiveContent="{Binding ActiveContent,Mode=TwoWay}"
-                         LayoutItemContainerStyleSelector="{StaticResource AvalonDockStyleSelector}"
-                         LayoutItemTemplateSelector ="{Binding DataTemplateSelector}"
-                         >
+                           DataContext="{Binding DockManagerViewModel}"
+                           DocumentsSource="{Binding Documents}"
+                           AnchorablesSource="{Binding Anchorables}"
+                           ActiveContent="{Binding ActiveContent,Mode=TwoWay}"
+                           LayoutItemContainerStyleSelector="{StaticResource AvalonDockStyleSelector}"
+                           LayoutItemTemplateSelector ="{Binding DataTemplateSelector}"
+                           >
             <ad:DockingManager.Theme>
                 <ad:Vs2013LightTheme/>
             </ad:DockingManager.Theme>

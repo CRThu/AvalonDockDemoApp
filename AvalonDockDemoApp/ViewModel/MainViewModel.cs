@@ -43,11 +43,16 @@ namespace AvalonDockDemoApp.ViewModel
             this.DockManagerViewModel = new DockManagerViewModel(documents, anchorables);
             DockManagerViewModel.AppRegister(MenuItemLayoutViews);
 
-            MenuTopViewModel = new MenuTopViewModel();
-            var layoutVM = new MenuLayoutViewModel();
-            MenuTopViewModel.Add(layoutVM);
-            layoutVM.Add(new MenuViewsViewModel(DockManagerViewModel.AppNames));
-            // layoutVM.Add(new MenuViewItemViewModel() { Header = "SampleApp C" });
+            // Menu Instance
+            MenuTopViewModel = new MenuTopViewModel(
+                new MenuItemBaseViewModel[]
+                {
+                    new MenuLayoutViewModel(
+                    new MenuItemBaseViewModel[]
+                    {
+                        new MenuViewsViewModel(DockManagerViewModel.AppNames)
+                    })
+                });
         }
     }
 }
