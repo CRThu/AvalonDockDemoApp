@@ -2,6 +2,7 @@
 using AvalonDockDemoApp.View;
 using AvalonDockDemoApp.ViewModel.Menu;
 using AvalonDockDemoApp.ViewModel.Message;
+using AvalonDockDemoApp.ViewModel.Theme;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -49,6 +50,8 @@ namespace AvalonDockDemoApp.ViewModel.Dock
 
         public IEnumerable<string> AppNames => VmFactory.AppNames;
 
+        public DockThemeManager ThemeManager { get; private set; }
+
         private int SampleCounter { get; set; }
 
         public DockManagerViewModel()
@@ -61,6 +64,7 @@ namespace AvalonDockDemoApp.ViewModel.Dock
             Anchorables = new ObservableCollection<DockWindowBaseViewModel>();
 
             VmFactory = new();
+            ThemeManager = new DockThemeManager();
 
             SampleCounter = 0;
         }

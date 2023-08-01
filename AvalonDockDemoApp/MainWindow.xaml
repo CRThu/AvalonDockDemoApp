@@ -55,19 +55,31 @@
                 <MenuItem Header="Save" Command="{Binding SaveLayoutCommand}" CommandParameter="{Binding ElementName=dockManager}"/>
                 <MenuItem Header="Load" Command="{Binding LoadLayoutCommand}" CommandParameter="{Binding ElementName=dockManager}"/>
             </MenuItem>
+            <MenuItem DataContext="{Binding MenuThemesViewModel}" ItemsSource="{Binding Items}">
+                <MenuItem.Resources>
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Command" Value="{Binding ClickCommand}" />
+                        <Setter Property="Header" Value="{Binding Header}" />
+                        <Setter Property="IsCheckable" Value="{Binding IsCheckable}" />
+                        <Setter Property="IsChecked" Value="{Binding IsChecked}" />
+                    </Style>
+                    <HierarchicalDataTemplate DataType="{x:Type vmm:MenuThemesViewModel}" ItemsSource="{Binding Items}" />
+                </MenuItem.Resources>
+            </MenuItem>
         </Menu>
 
         <ad:DockingManager x:Name="dockManager" Grid.Row="1"
                            DataContext="{Binding DockManagerViewModel}"
+                           Theme="{Binding ThemeManager.SelectedTheme}"
                            DocumentsSource="{Binding Documents}"
                            AnchorablesSource="{Binding Anchorables}"
                            ActiveContent="{Binding ActiveContent,Mode=TwoWay}"
                            LayoutItemContainerStyleSelector="{StaticResource AvalonDockStyleSelector}"
                            LayoutItemTemplateSelector ="{Binding DataTemplateSelector}"
                            >
-            <ad:DockingManager.Theme>
+            <!--<ad:DockingManager.Theme>
                 <ad:Vs2013LightTheme/>
-            </ad:DockingManager.Theme>
+            </ad:DockingManager.Theme>-->
 
             <!--<ad:DockingManager.LayoutItemTemplateSelector>
                 <sel:AvalonDockDataTemplateSelector/>

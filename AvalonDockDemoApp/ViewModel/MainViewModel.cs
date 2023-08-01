@@ -1,9 +1,11 @@
 ﻿using AvalonDock;
 using AvalonDock.Layout.Serialization;
+using AvalonDock.Themes;
 using AvalonDockDemoApp.View;
 using AvalonDockDemoApp.ViewModel.Dock;
 using AvalonDockDemoApp.ViewModel.Menu;
 using AvalonDockDemoApp.ViewModel.Message;
+using AvalonDockDemoApp.ViewModel.Theme;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DryIoc;
@@ -20,7 +22,10 @@ namespace AvalonDockDemoApp.ViewModel
     public partial class MainViewModel : ObservableObject
     {
         public DockManagerViewModel DockManagerViewModel { get; private set; }
+
+        public DockThemeManager ThemeManager { get; private set; }
         public MenuViewsViewModel MenuViewsViewModel { get; private set; }
+        public MenuThemesViewModel MenuThemesViewModel { get; private set; }
 
         public MainViewModel()
         {
@@ -49,6 +54,7 @@ namespace AvalonDockDemoApp.ViewModel
 
             // Menu Instance
             MenuViewsViewModel = new MenuViewsViewModel(DockManagerViewModel.AppNames);
+            MenuThemesViewModel = new MenuThemesViewModel(DockManagerViewModel.ThemeManager.Themes);
         }
 
         [RelayCommand]
