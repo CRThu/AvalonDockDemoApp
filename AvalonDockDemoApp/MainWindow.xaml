@@ -38,18 +38,23 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" DataContext="{Binding MenuTopViewModel}" ItemsSource="{Binding Items}">
-            <Menu.Resources>
-                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Command" Value="{Binding ClickCommand}" />
-                    <Setter Property="Header" Value="{Binding Header}" />
-                    <Setter Property="IsCheckable" Value="{Binding IsCheckable}" />
-                    <Setter Property="IsChecked" Value="{Binding IsChecked}" />
-                </Style>
-                <HierarchicalDataTemplate DataType="{x:Type vmm:MenuTopViewModel}" ItemsSource="{Binding Items}" />
-                <HierarchicalDataTemplate DataType="{x:Type vmm:MenuLayoutViewModel}" ItemsSource="{Binding Items}" />
-                <HierarchicalDataTemplate DataType="{x:Type vmm:MenuViewsViewModel}" ItemsSource="{Binding Items}" />
-            </Menu.Resources>
+        <Menu Grid.Row="0">
+            <MenuItem DataContext="{Binding MenuViewsViewModel}" ItemsSource="{Binding Items}">
+                <MenuItem.Resources>
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Command" Value="{Binding ClickCommand}" />
+                        <Setter Property="Header" Value="{Binding Header}" />
+                        <Setter Property="IsCheckable" Value="{Binding IsCheckable}" />
+                        <Setter Property="IsChecked" Value="{Binding IsChecked}" />
+                    </Style>
+                    <HierarchicalDataTemplate DataType="{x:Type vmm:MenuViewsViewModel}" ItemsSource="{Binding Items}" />
+                </MenuItem.Resources>
+            </MenuItem>
+            <MenuItem Header="Layout">
+                <Separator/>
+                <MenuItem Header="Save" Command="{Binding SaveLayoutCommand}"/>
+                <MenuItem Header="Load" Command="{Binding LoadLayoutCommand}/>
+            </MenuItem>
         </Menu>
 
         <ad:DockingManager Grid.Row="1"

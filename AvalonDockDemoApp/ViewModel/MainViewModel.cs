@@ -16,7 +16,7 @@ namespace AvalonDockDemoApp.ViewModel
     public class MainViewModel
     {
         public DockManagerViewModel DockManagerViewModel { get; private set; }
-        public MenuTopViewModel MenuTopViewModel { get; private set; }
+        public MenuViewsViewModel MenuViewsViewModel { get; private set; }
 
         public MainViewModel()
         {
@@ -44,15 +44,7 @@ namespace AvalonDockDemoApp.ViewModel
             DockManagerViewModel.AppRegister(MenuItemLayoutViews);
 
             // Menu Instance
-            MenuTopViewModel = new MenuTopViewModel(
-                new MenuItemBaseViewModel[]
-                {
-                    new MenuLayoutViewModel(
-                    new MenuItemBaseViewModel[]
-                    {
-                        new MenuViewsViewModel(DockManagerViewModel.AppNames)
-                    })
-                });
+            MenuViewsViewModel = new MenuViewsViewModel(DockManagerViewModel.AppNames);
         }
     }
 }
