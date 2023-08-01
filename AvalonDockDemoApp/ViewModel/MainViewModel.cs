@@ -1,7 +1,11 @@
-﻿using AvalonDockDemoApp.View;
+﻿using AvalonDock;
+using AvalonDock.Layout.Serialization;
+using AvalonDockDemoApp.View;
 using AvalonDockDemoApp.ViewModel.Dock;
 using AvalonDockDemoApp.ViewModel.Menu;
 using AvalonDockDemoApp.ViewModel.Message;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DryIoc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +17,7 @@ using System.Windows.Data;
 
 namespace AvalonDockDemoApp.ViewModel
 {
-    public class MainViewModel
+    public partial class MainViewModel : ObservableObject
     {
         public DockManagerViewModel DockManagerViewModel { get; private set; }
         public MenuViewsViewModel MenuViewsViewModel { get; private set; }
@@ -46,5 +50,21 @@ namespace AvalonDockDemoApp.ViewModel
             // Menu Instance
             MenuViewsViewModel = new MenuViewsViewModel(DockManagerViewModel.AppNames);
         }
+
+        [RelayCommand]
+        public void SaveLayout(object parameter)
+        {
+            var layoutSerializer = new XmlLayoutSerializer((DockingManager)parameter);
+            layoutSerializer.Serialize(@"./AnalonDock.Layout.config");
+        }
+
+
+        [RelayCommand]
+        public void LoadLayout(object parameter)
+        {
+            var layoutSerializer = new XmlLayoutSerializer((DockingManager)parameter);
+            layoutSerializer.Deserialize(@"./AnalonDock.Layout.config");
+        }
+
     }
 }

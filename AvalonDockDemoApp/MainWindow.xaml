@@ -52,12 +52,12 @@
             </MenuItem>
             <MenuItem Header="Layout">
                 <Separator/>
-                <MenuItem Header="Save" Command="{Binding SaveLayoutCommand}"/>
-                <MenuItem Header="Load" Command="{Binding LoadLayoutCommand}/>
+                <MenuItem Header="Save" Command="{Binding SaveLayoutCommand}" CommandParameter="{Binding ElementName=dockManager}"/>
+                <MenuItem Header="Load" Command="{Binding LoadLayoutCommand}" CommandParameter="{Binding ElementName=dockManager}"/>
             </MenuItem>
         </Menu>
 
-        <ad:DockingManager Grid.Row="1"
+        <ad:DockingManager x:Name="dockManager" Grid.Row="1"
                            DataContext="{Binding DockManagerViewModel}"
                            DocumentsSource="{Binding Documents}"
                            AnchorablesSource="{Binding Anchorables}"
