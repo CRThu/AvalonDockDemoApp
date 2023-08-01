@@ -9,11 +9,13 @@
         xmlns:vm="clr-namespace:AvalonDockDemoApp.ViewModel"
         xmlns:vmm="clr-namespace:AvalonDockDemoApp.ViewModel.Menu"
         xmlns:ad="https://github.com/Dirkster99/AvalonDock"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        DataContext="{Binding Source={StaticResource Locator},Path=MainWindow}"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:MainViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
 
         <Style TargetType="{x:Type ad:LayoutDocumentItem}" x:Key="DocumentStyle">

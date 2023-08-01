@@ -22,8 +22,6 @@ namespace AvalonDockDemoApp.ViewModel
     public partial class MainViewModel : ObservableObject
     {
         public DockManagerViewModel DockManagerViewModel { get; private set; }
-
-        public DockThemeManager ThemeManager { get; private set; }
         public MenuViewsViewModel MenuViewsViewModel { get; private set; }
         public MenuThemesViewModel MenuThemesViewModel { get; private set; }
 
